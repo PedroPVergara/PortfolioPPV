@@ -110,7 +110,7 @@ const Home = () => {
               ref={imageRef}
               src={FocusPPV}
               alt="Pedro Ponce Vergara"
-              className="absolute bottom-[19%] left-1/2 transform -translate-x-1/2 max-h-[100vh] w-auto object-contain select-none z-10"
+              className="absolute bottom-[19%] left-1/2 transform -translate-x-1/2 h-[70vh] w-auto object-contain select-none z-10"
               draggable="false"
             />
           </div>
