@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import logo from '../assets/CCS-PPV-LOGO.webp';
 import portrait from '../assets/PPV.webp';
+import focus from '../assets/focus.webp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { SpotlightBackground } from '../components/ui/spotlight';
@@ -104,13 +105,21 @@ const Section1: React.FC = () => {
 
         {/* Portrait Image */}
         <div className="h-[55vh] md:h-[85vh] w-auto md:w-1/2 flex items-end justify-center md:justify-end">
-          <img
-            ref={imageRef}
-            src={portrait}
-            alt="Pedro Ponce Vergara"
-            className="h-full w-auto object-contain max-w-none select-none"
-            draggable="false"
-          />
+          <div className="relative h-full w-auto flex items-end justify-center">
+            <img
+              src={focus}
+              alt=""
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[130%] max-w-none z-0 select-none pointer-events-none"
+              draggable="false"
+            />
+            <img
+              ref={imageRef}
+              src={portrait}
+              alt="Pedro Ponce Vergara"
+              className="relative z-10 h-full w-auto object-contain max-w-none select-none"
+              draggable="false"
+            />
+          </div>
         </div>
       </div>
     </section>

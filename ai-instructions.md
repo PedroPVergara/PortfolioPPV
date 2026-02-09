@@ -68,7 +68,8 @@
 
 ## Visual Effects & Interactions
 - **Spotlight Background**: Ambient animated spotlight effect. Must interact with the main portrait image (smoothly growing when passing behind it).
-- **Image Protection**: Critical images (Logo, Portrait) MUST have `draggable="false"` and `select-none` class to prevent user interaction/dragging.
+- **Focus Element**: The `focus.webp` image must be positioned behind the main portrait, centered relative to the portrait, and must also have image protection (draggable="false").
+- **Image Protection**: Critical images (Logo, Portrait, Focus) MUST have `draggable="false"` and `select-none` class to prevent user interaction/dragging.
 
 ## Layout Rules
 - **Header**: Logo and Language Selector must be contained in a top-aligned Flex container to ensure perfect vertical center alignment between them.
