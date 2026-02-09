@@ -31,7 +31,7 @@ const Home = () => {
         <div className="w-full max-w-[90%] md:max-w-[85%] lg:max-w-[80%] mx-auto h-full flex flex-col md:flex-row items-center justify-between relative z-10">
 
           {/* Text Content - Moved down significantly - Aligned to strict left */}
-          <div className="flex flex-col justify-center items-start z-10 mb-8 md:mb-0 md:w-1/2 md:mt-48 pl-0 ml-0">
+          <div className="flex flex-col justify-center items-start z-10 mb-8 md:mb-0 md:w-1/2 md:mt-20 pl-0 ml-0">
 
             {/* Row 1: Hola, soy - Medium Weight */}
             <span className="text-white font-medium block leading-none whitespace-nowrap
