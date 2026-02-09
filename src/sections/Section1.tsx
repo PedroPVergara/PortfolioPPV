@@ -108,7 +108,7 @@ const Section1: React.FC = () => {
           <div className="relative h-full w-auto flex items-end justify-center">
             {/* SVG Focus Graphic replacing the raster image to avoid white background issues */}
             <FocusGraphic
-              className="absolute top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[180%] h-[180%] z-0 select-none pointer-events-none opacity-90"
+              className="absolute top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-[22deg] w-[180%] h-[180%] z-0 select-none pointer-events-none opacity-90"
             />
             <img
               ref={imageRef}
