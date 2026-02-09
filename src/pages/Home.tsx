@@ -10,9 +10,13 @@ const Home = () => {
 
   return (
     <main className="w-full min-h-screen bg-gradient-to-b from-[#0D1127] to-[#020307] relative">
+      {/* Global Background Effect - Moved here to cover all sections */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <SpotlightBackground className="w-full h-full" speed={2} imageRef={imageRef} />
+      </div>
+
       {/* --- SECTION 1 --- */}
       <section className="h-screen w-full relative flex items-center justify-center overflow-hidden font-montserrat z-10">
-        <SpotlightBackground className="absolute inset-0" speed={2} imageRef={imageRef} />
 
         {/* Header Container - Logo & Language Selector Aligned */}
         <div className="absolute top-0 left-0 w-full flex justify-between items-center px-8 py-8 z-20">
