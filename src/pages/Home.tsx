@@ -110,7 +110,7 @@ const Home = () => {
               ref={imageRef}
               src={FocusPPV}
               alt="Pedro Ponce Vergara"
-              className="absolute bottom-[20%] left-1/2 transform -translate-x-1/2 max-h-[70vh] w-auto object-contain select-none z-10"
+              className="absolute bottom-[20%] left-1/2 transform -translate-x-1/2 max-h-[85vh] w-auto object-contain select-none z-10"
               draggable="false"
             />
           </div>
@@ -130,7 +130,7 @@ const Home = () => {
 
       {/* --- SECTION 3 --- */}
       <section className="h-screen w-full flex items-center justify-center text-white relative z-0">
-         <h1 className="text-4xl font-bold">Section 3</h1>
+        <h1 className="text-4xl font-bold">Section 3</h1>
       </section>
     </main>
   );
