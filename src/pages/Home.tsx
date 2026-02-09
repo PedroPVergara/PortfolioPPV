@@ -119,13 +119,13 @@ const Home = () => {
 
       {/* --- FLOATING CONTAINER (About Me) --- */}
       {/* Starts at 20% remaining of Section 1 (top-[80vh]) and extends 70vh (covers 50vh of Section 2) */}
-      <div className="absolute top-[80vh] left-0 right-0 mx-auto w-full max-w-[90%] md:max-w-[85%] lg:max-w-[80%] h-[70vh] z-20 border-2 border-[#34AEFA] bg-gradient-to-b from-[#1D293D] to-transparent">
+      <div className="absolute top-[80vh] left-0 right-0 mx-auto w-full max-w-[90%] md:max-w-[85%] lg:max-w-[80%] h-[70vh] z-20 bg-gradient-to-b from-[#1D293D] to-transparent">
         {/* Content will go here */}
       </div>
 
       {/* --- SECTION 2 --- */}
       <section className="h-screen w-full flex items-center justify-center text-white relative z-0">
-        <h1 className="text-4xl font-bold">Section 2</h1>
+
       </section>
 
       {/* --- SECTION 3 --- */}
