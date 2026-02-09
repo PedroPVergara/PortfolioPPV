@@ -105,12 +105,12 @@ const Home = () => {
           </div>
 
           {/* Portrait Image with Integrated Focus Graphic */}
-          <div className="h-full w-full md:w-1/2 relative">
+          <div className="h-[80vh] w-full md:w-1/2 relative md:self-start">
             <img
               ref={imageRef}
               src={FocusPPV}
               alt="Pedro Ponce Vergara"
-              className="absolute bottom-[19.5%] left-1/2 transform -translate-x-1/2 h-[65vh] w-auto object-contain select-none z-10 scale-[1.25] origin-bottom"
+              className="absolute bottom-[-5px] left-1/2 transform -translate-x-1/2 h-[65vh] w-auto object-contain select-none z-10 scale-[1.25] origin-bottom"
               draggable="false"
             />
           </div>
