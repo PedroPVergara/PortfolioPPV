@@ -28,14 +28,14 @@ const Section1: React.FC = () => {
       {/* Main Content Container */}
       <div className="container mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-center relative z-0">
 
-        {/* Text Content - Centered relative to container - Moved up slightly (-mt) */}
-        <div className="flex flex-col justify-center items-start z-10 mb-8 md:mb-0 md:w-1/2 md:pl-10 lg:pl-20 md:-mt-12">
+        {/* Text Content - Centered relative to container - Moved down slightly */}
+        <div className="flex flex-col justify-center items-start z-10 mb-8 md:mb-0 md:w-1/2 md:pl-10 lg:pl-20 md:mt-0">
 
           {/* Row 1: Hola, soy - Medium Weight */}
           <span className="text-white font-medium block leading-none whitespace-nowrap
             mb-[10px] xl:mb-[13px] 2xl:mb-4 3xl:mb-5 4xl:mb-[27px] 5xl:mb-10
-            text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px]
-            xl:text-[40px] 
+            text-[24px] sm:text-[28px] md:text-[28px] lg:text-[30px]
+            xl:text-[34px] 
             2xl:text-[48px] 
             3xl:text-[60px] 
             4xl:text-[80px] 
@@ -47,8 +47,8 @@ const Section1: React.FC = () => {
           <h1 className="text-white font-semibold leading-[0.9] flex flex-col">
             {/* Pedro Ponce - Forced to single line */}
             <span className="block whitespace-nowrap
-              text-[42px] sm:text-[52px] md:text-[64px] lg:text-[72px]
-              xl:text-[80px] 
+              text-[42px] sm:text-[52px] md:text-[56px] lg:text-[60px]
+              xl:text-[68px] 
               2xl:text-[96px] 
               3xl:text-[120px] 
               4xl:text-[160px] 
@@ -57,8 +57,8 @@ const Section1: React.FC = () => {
             </span>
             {/* Vergara - Forced to single line */}
             <span className="block text-white whitespace-nowrap
-              text-[42px] sm:text-[52px] md:text-[64px] lg:text-[72px]
-              xl:text-[80px] 
+              text-[42px] sm:text-[52px] md:text-[56px] lg:text-[60px]
+              xl:text-[68px] 
               2xl:text-[96px] 
               3xl:text-[120px] 
               4xl:text-[160px] 
@@ -70,8 +70,8 @@ const Section1: React.FC = () => {
           {/* Row 4: Title - Light Weight - Accent Color #34AEFA */}
           <span className="text-accent-blue font-light block leading-none whitespace-nowrap
             mt-[10px] xl:mt-[13px] 2xl:mt-4 3xl:mt-5 4xl:mt-[27px] 5xl:mt-10
-            text-[16px] sm:text-[20px] md:text-[24px] lg:text-[28px]
-            xl:text-[30px] 
+            text-[16px] sm:text-[20px] md:text-[20px] lg:text-[24px]
+            xl:text-[26px] 
             2xl:text-[36px] 
             3xl:text-[45px] 
             4xl:text-[60px] 
