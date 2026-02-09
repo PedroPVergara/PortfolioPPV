@@ -15,13 +15,13 @@ const FocusGraphic: React.FC<FocusGraphicProps> = ({ className }) => {
       {/* Color based on reference: Golden/Mustard Yellow */}
       <g fill="#ECA72C">
         {/* Vertical Bar */}
-        <rect x="42" y="0" width="16" height="100" rx="2" />
+        <rect x="44" y="0" width="12" height="100" />
         {/* 45deg Bar */}
-        <rect x="42" y="0" width="16" height="100" rx="2" transform="rotate(45 50 50)" />
+        <rect x="44" y="0" width="12" height="100" transform="rotate(45 50 50)" />
         {/* Horizontal Bar */}
-        <rect x="42" y="0" width="16" height="100" rx="2" transform="rotate(90 50 50)" />
+        <rect x="44" y="0" width="12" height="100" transform="rotate(90 50 50)" />
         {/* 135deg Bar */}
-        <rect x="42" y="0" width="16" height="100" rx="2" transform="rotate(135 50 50)" />
+        <rect x="44" y="0" width="12" height="100" transform="rotate(135 50 50)" />
       </g>
     </svg>
   );
