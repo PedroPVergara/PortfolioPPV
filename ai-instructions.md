@@ -68,8 +68,8 @@
 
 ## Visual Effects & Interactions
 - **Spotlight Background**: Ambient animated spotlight effect. Must interact with the main portrait image (smoothly growing when passing behind it).
-- **Focus Element**: Replaced `focus.webp` with `FocusGraphic` (SVG component) to ensure perfect transparency and vector quality. Must be positioned behind the main portrait, centered relative to it.
-- **Image Protection**: Critical images (Logo, Portrait, Focus) MUST have `draggable="false"` and `select-none` class to prevent user interaction/dragging.
+- **Focus Element**: Used `FocusPPV.webp` which integrates both the portrait and the focus graphic. Positioned at bottom 20% of the viewport.
+- **Image Protection**: Critical images (Logo, FocusPPV) MUST have `draggable="false"` and `select-none` class to prevent user interaction/dragging.
 
 ## Layout Rules
 - **Header**: Logo and Language Selector must be contained in a top-aligned Flex container to ensure perfect vertical center alignment between them.

@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import logo from '../assets/CCS-PPV-LOGO.webp';
-import portrait from '../assets/PPV.webp';
-import FocusGraphic from '../components/ui/FocusGraphic';
+import FocusPPV from '../assets/FocusPPV.webp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { SpotlightBackground } from '../components/ui/spotlight';
@@ -103,21 +102,15 @@ const Section1: React.FC = () => {
           </div>
         </div>
 
-        {/* Portrait Image */}
-        <div className="h-[55vh] md:h-[85vh] w-auto md:w-1/2 flex items-end justify-center md:justify-end">
-          <div className="relative h-full w-auto flex items-end justify-center">
-            {/* SVG Focus Graphic replacing the raster image to avoid white background issues */}
-            <FocusGraphic
-              className="absolute top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-[22deg] w-[180%] h-[180%] z-0 select-none pointer-events-none opacity-90"
-            />
-            <img
-              ref={imageRef}
-              src={portrait}
-              alt="Pedro Ponce Vergara"
-              className="relative z-10 h-full w-auto object-contain max-w-none select-none"
-              draggable="false"
-            />
-          </div>
+        {/* Portrait Image with Integrated Focus Graphic */}
+        <div className="h-full w-full md:w-1/2 relative">
+          <img
+            ref={imageRef}
+            src={FocusPPV}
+            alt="Pedro Ponce Vergara"
+            className="absolute bottom-[20%] left-1/2 transform -translate-x-1/2 max-h-[70vh] w-auto object-contain select-none z-10"
+            draggable="false"
+          />
         </div>
       </div>
     </section>
