@@ -1,10 +1,33 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { BackgroundPattern } from '../components/ui/BackgroundPattern';
 import { SpotlightBackground } from '../components/ui/spotlight';
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const imageRef = useRef<HTMLImageElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const images = [
+      "/assets/LOGO-PPV.webp",
+      "/assets/about-card.webp",
+      "/assets/AboutMe_1.webp"
+    ];
+
+    const loadImage = (src: string) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = resolve;
+        img.onerror = resolve; // Continue even if one fails
+      });
+    };
+
+    Promise.all(images.map(loadImage))
+      .then(() => setIsLoaded(true))
+      .catch(() => setIsLoaded(true));
+  }, []);
 
   return (
     <main className="w-full min-h-screen bg-gradient-to-b from-[#0D1127] to-[#020307] relative">
@@ -23,7 +46,12 @@ const Home = () => {
 
       {/* --- FLOATING CONTAINER (About Me) --- */}
       {/* Moved to top-[20vh] (lowered by 10% from previous 10vh) */}
-      <div className="absolute top-[20vh] left-0 right-0 mx-auto w-full max-w-[90%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-[65%] 2xl:max-w-[50%] 3xl:max-w-[36%] 4xl:max-w-[28%] z-20">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isLoaded ? 1 : 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="absolute top-[20vh] left-0 right-0 mx-auto w-full max-w-[90%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-[65%] 2xl:max-w-[50%] 3xl:max-w-[36%] 4xl:max-w-[28%] z-20"
+      >
         {/* Logo PPV - Small & Aligned Left above Image */}
         {/* Lowered by 5% from previous 0vh position (now at 5vh absolute: 20vh container - 15vh relative) */}
         {/* Increased size by 20% (from 40px to 48px) and responsive for 1440p+ */}
@@ -58,7 +86,7 @@ const Home = () => {
         <div className="absolute top-[97%] left-0 w-full min-h-[75vh] bg-gradient-to-b from-[#1D293D] to-[#0D1127] border border-[#34AEFA] z-20 rounded-none p-8 md:p-12 3xl:p-32 4xl:p-40 flex items-center justify-center">
           <img src="/assets/AboutMe_1.webp" alt="About Me Content" className="w-full h-auto object-contain select-none" draggable="false" />
         </div>
-      </div>
+      </motion.div>
 
       {/* --- SECTION 2 --- */}
       <section className="h-screen w-full flex items-center justify-center text-white relative z-0">
