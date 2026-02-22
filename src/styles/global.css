@@ -134,3 +134,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0D1127; /* Dark background matching the theme */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #34AEFA; /* Accent Blue */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #60BFFF; /* Lighter Blue on hover */
+}
