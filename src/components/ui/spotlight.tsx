@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import { cn } from "@/lib/utils"
 
 export interface SpotlightBackgroundProps {
@@ -12,7 +12,7 @@ export interface SpotlightBackgroundProps {
   blur?: number
   /** Opacity of the spotlight */
   opacity?: number
-  /** Animation duration in seconds (higher = slower) */
+  /** Speed of movement (pixels per frame approx) */
   speed?: number
   /** Ignored in CSS version but kept for compatibility */
   smoothing?: number
@@ -22,6 +22,13 @@ export interface SpotlightBackgroundProps {
   imageRef?: React.RefObject<HTMLElement | null>
 }
 
+interface SpotlightState {
+  x: number
+  y: number
+  vx: number
+  vy: number
+}
+
 export function SpotlightBackground({
   className,
   children,
@@ -29,48 +36,96 @@ export function SpotlightBackground({
   size = 400,
   blur = 80,
   opacity = 1,
-  speed = 10, // Default duration in seconds
+  speed = 2, // Speed in pixels per frame
 }: SpotlightBackgroundProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const spotlightRefs = useRef<(HTMLDivElement | null)[]>([])
+  const statesRef = useRef<SpotlightState[]>([])
+  const requestRef = useRef<number | null>(null)
+
   const colorArray = Array.isArray(colors) ? colors : [colors]
 
-  return (
-    <div className={cn("fixed inset-0 overflow-hidden", className)}>
-      <style>{`
-        @keyframes spotlight-float-1 {
-          0% { transform: translate(-20%, -20%) scale(1); }
-          33% { transform: translate(30%, 10%) scale(1.1); }
-          66% { transform: translate(-10%, 30%) scale(0.9); }
-          100% { transform: translate(-20%, -20%) scale(1); }
-        }
-        @keyframes spotlight-float-2 {
-          0% { transform: translate(20%, 20%) scale(1); }
-          33% { transform: translate(-30%, -10%) scale(1.2); }
-          66% { transform: translate(10%, -30%) scale(0.8); }
-          100% { transform: translate(20%, 20%) scale(1); }
-        }
-        @keyframes spotlight-float-3 {
-          0% { transform: translate(-10%, 10%) scale(0.9); }
-          50% { transform: translate(20%, -20%) scale(1.1); }
-          100% { transform: translate(-10%, 10%) scale(0.9); }
-        }
-      `}</style>
+  useEffect(() => {
+    // Initialize states with random positions and velocities
+    const container = containerRef.current
+    if (!container) return
 
+    const { width, height } = container.getBoundingClientRect()
+    
+    // Initialize states if empty or color count changed
+    if (statesRef.current.length !== colorArray.length) {
+      statesRef.current = colorArray.map(() => ({
+        x: Math.random() * (width - size),
+        y: Math.random() * (height - size),
+        vx: (Math.random() - 0.5) * speed, // Random direction X
+        vy: (Math.random() - 0.5) * speed  // Random direction Y
+      }))
+    }
+
+    const animate = () => {
+      if (!containerRef.current) return
+      
+      const { width, height } = containerRef.current.getBoundingClientRect()
+
+      spotlightRefs.current.forEach((ref, i) => {
+        if (!ref) return
+        const state = statesRef.current[i]
+
+        // Update position
+        state.x += state.vx
+        state.y += state.vy
+
+        // Bounce off walls
+        if (state.x <= -size / 2) {
+          state.x = -size / 2
+          state.vx *= -1
+        } else if (state.x >= width - size / 2) {
+          state.x = width - size / 2
+          state.vx *= -1
+        }
+
+        if (state.y <= -size / 2) {
+          state.y = -size / 2
+          state.vy *= -1
+        } else if (state.y >= height - size / 2) {
+          state.y = height - size / 2
+          state.vy *= -1
+        }
+
+        // Apply transform directly for performance
+        ref.style.transform = `translate3d(${state.x}px, ${state.y}px, 0)`
+      })
+
+      requestRef.current = requestAnimationFrame(animate)
+    }
+
+    requestRef.current = requestAnimationFrame(animate)
+
+    return () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current)
+    }
+  }, [colorArray.length, size, speed])
+
+  return (
+    <div
+      ref={containerRef}
+      className={cn("fixed inset-0 overflow-hidden", className)}
+    >
       {/* Spotlight layers */}
       {colorArray.map((color, i) => (
         <div
           key={i}
+          ref={(el) => { spotlightRefs.current[i] = el }}
           className="pointer-events-none absolute rounded-full will-change-transform"
           style={{
             width: size,
             height: size,
-            left: '50%',
-            top: '50%',
-            marginLeft: -size / 2,
-            marginTop: -size / 2,
+            left: 0,
+            top: 0,
             background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
             opacity,
             filter: `blur(${blur}px)`,
-            animation: `spotlight-float-${(i % 3) + 1} ${speed * (1 + i * 0.2)}s infinite ease-in-out`,
+            // Initial position handled by JS immediately
           }}
         />
       ))}

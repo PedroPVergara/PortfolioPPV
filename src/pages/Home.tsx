@@ -3,6 +3,7 @@ import { BackgroundPattern } from '../components/ui/BackgroundPattern';
 import { SpotlightBackground } from '../components/ui/spotlight';
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { motion } from "framer-motion";
+import { ProjectCard } from '../components/ProjectCard';
 
 const Home = () => {
   const imageRef = useRef<HTMLImageElement>(null);
@@ -35,7 +36,13 @@ const Home = () => {
       <section className="h-screen w-full relative flex items-center justify-center overflow-hidden font-montserrat z-10">
         {/* Spotlight restricted to Section 1 with fade-out mask to prevent hard cut at bottom */}
         <div className="absolute inset-0 [mask-image:linear-gradient(to_bottom,black_85%,transparent_100%)]">
-          <SpotlightBackground className="absolute inset-0" speed={2} imageRef={imageRef} />
+          <SpotlightBackground
+            className="absolute inset-0"
+            speed={16}
+            size={800}
+            opacity={1.0}
+            imageRef={imageRef}
+          />
         </div>
 
         {/* Pattern Background */}
@@ -82,20 +89,108 @@ const Home = () => {
           </a>
         </div>
 
-        {/* Gradient Container below the card */}
-        <div className="absolute top-[97%] left-0 w-full min-h-[75vh] bg-gradient-to-b from-[#1D293D] to-[#0D1127] border border-[#34AEFA] z-20 rounded-none p-8 md:p-12 3xl:p-32 4xl:p-40 flex items-center justify-center">
-          <img src="/assets/AboutMe_1.webp" alt="About Me Content" className="w-full h-auto object-contain select-none" draggable="false" />
+        {/* Wrapper containing the Gradient Container, Projects Header, and Project Cards */}
+        {/* Starts at 107% of the main card's height */}
+        <div className="absolute top-[107%] left-0 w-full z-20 flex flex-col gap-[50px]">
+
+          {/* Gradient Container - Now relative within the wrapper */}
+          <div
+            className="w-full h-auto bg-gradient-to-b from-[#1D293D] to-[#0D1127] border border-[#34AEFA] rounded-none p-8 md:p-12 3xl:p-32 4xl:p-40 flex items-center justify-center"
+            style={{
+              boxShadow: "0 0 15px 2px rgba(52, 174, 250, 0.4), inset 0 0 15px 2px rgba(52, 174, 250, 0.2)"
+            }}
+          >
+            <img src="/assets/AboutMe_1.webp" alt="About Me Content" className="w-full h-auto object-contain select-none" draggable="false" />
+          </div>
+
+          {/* Projects Header - Positioned relative to the end of the container */}
+          <div className="w-full flex justify-between items-start z-30 pb-12">
+            {/* Left: Title with Bar */}
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-5 md:h-6 bg-[#DD9F2D]"></div>
+              <h2 className="text-white text-xl md:text-2xl font-bold font-montserrat tracking-wider">
+                PROYECTOS
+              </h2>
+            </div>
+
+            {/* Right: Legend */}
+            <div className="flex flex-col gap-3 items-end">
+              <div className="flex items-center gap-3">
+                <span className="text-white text-sm md:text-base font-montserrat font-medium">Experiencia Laboral</span>
+                <span className="material-symbols-outlined text-[#DD9F2D] text-2xl md:text-3xl">award_star</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-white text-sm md:text-base font-montserrat font-medium">Proyecto Personal</span>
+                <span className="material-symbols-outlined text-[#ACACAC] text-2xl md:text-3xl">verified</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Project Card Component */}
+          <div className="w-full flex flex-col gap-12">
+            <ProjectCard
+              title="PANAVIAL - PASHQ | SaaS gestion vial Ecuador"
+              description="Desarrollo de un Sistema de Gestión Vial integral para concesiones de autopistas. El objetivo principal fue digitalizar y optimizar la monitorización de eventos graves en la ruta como vehículos con sobrepeso, accidentes e infracciones, garantizando la seguridad y el cumplimiento normativo."
+              projectType="work"
+              technologies={[
+                { name: "React", icon: "/assets/cards/panavial/icons/ReactIcon.webp" },
+                { name: "Typescript", icon: "/assets/cards/panavial/icons/TSIcon.webp" },
+                { name: "Tailwind 4", icon: "/assets/cards/panavial/icons/TailindIcon.webp" },
+                { name: "Motion", icon: "/assets/cards/panavial/icons/FramerMotionIcon.webp" },
+                { name: "Websockets", icon: "/assets/cards/panavial/icons/WebSocketsIcon.webp" },
+                { name: "NodeJS", icon: "/assets/cards/panavial/icons/NodeJSIcon.webp" }
+              ]}
+              images={[
+                { url: "/assets/cards/panavial/Login.webp", desc: "Login: Aca se ingresan las credenciales de operador." },
+                { url: "/assets/cards/panavial/2FA.webp", desc: "2FA: Aca ingresamos el codigo OTP enviado por mail." },
+                { url: "/assets/cards/panavial/Transito.webp", desc: "Transito: Vista de la pestana transito, donde se observan todos los eventos de cruce de vehiculos." }
+              ]}
+            >
+              {/* Image Viewer Placeholder - Fallback if no images provided */}
+              <div className="w-full h-full bg-[#0D1127] flex items-center justify-center text-white/50">
+                Image Viewer Placeholder
+              </div>
+            </ProjectCard>
+
+            {/* Second Project Card (Placeholder) */}
+            <ProjectCard
+              title="PANAVIAL - PASHQ | SaaS gestion vial Ecuador"
+              description="Desarrollo de un Sistema de Gestión Vial integral para concesiones de autopistas. El objetivo principal fue digitalizar y optimizar la monitorización de eventos graves en la ruta como vehículos con sobrepeso, accidentes e infracciones, garantizando la seguridad y el cumplimiento normativo."
+              projectType="work"
+              technologies={[
+                { name: "React", icon: "/assets/cards/panavial/icons/ReactIcon.webp" },
+                { name: "Typescript", icon: "/assets/cards/panavial/icons/TSIcon.webp" },
+                { name: "Tailwind 4", icon: "/assets/cards/panavial/icons/TailindIcon.webp" },
+                { name: "Motion", icon: "/assets/cards/panavial/icons/FramerMotionIcon.webp" },
+                { name: "Websockets", icon: "/assets/cards/panavial/icons/WebSocketsIcon.webp" },
+                { name: "NodeJS", icon: "/assets/cards/panavial/icons/NodeJSIcon.webp" }
+              ]}
+              images={[
+                { url: "/assets/cards/panavial/Login.webp", desc: "Login: Aca se ingresan las credenciales de operador." },
+                { url: "/assets/cards/panavial/2FA.webp", desc: "2FA: Aca ingresamos el codigo OTP enviado por mail." },
+                { url: "/assets/cards/panavial/Transito.webp", desc: "Transito: Vista de la pestana transito, donde se observan todos los eventos de cruce de vehiculos." }
+              ]}
+            >
+              {/* Image Viewer Placeholder - Fallback if no images provided */}
+              <div className="w-full h-full bg-[#0D1127] flex items-center justify-center text-white/50">
+                Image Viewer Placeholder
+              </div>
+            </ProjectCard>
+          </div>
+
         </div>
       </motion.div>
 
-      {/* --- SECTION 2 --- */}
-      <section className="h-screen w-full flex items-center justify-center text-white relative z-0">
-
+      {/* --- SECTION 2 (PROJECTS) --- */}
+      <section className="min-h-screen w-full relative z-0 flex flex-col items-center">
+        {/* Spacer to push content below the floating About Me card + Projects Header */}
+        {/* The About Me card structure ends at: 20vh (top) + ~45vh (card) + 75vh (container) + 10vh (spacing) + ~10vh (header) = ~160vh */}
+        <div className="w-full h-[160vh] pointer-events-none"></div>
       </section>
 
       {/* --- SECTION 3 --- */}
       <section className="h-screen w-full flex items-center justify-center text-white relative z-0">
-        <h1 className="text-4xl font-bold">Section 3</h1>
+
       </section>
     </main>
   );

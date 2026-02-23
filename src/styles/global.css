@@ -135,7 +135,7 @@
   }
 }
 
-/* Custom Scrollbar Styles */
+/* Custom Scrollbar Styles (Global) */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -151,4 +151,22 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #60BFFF; /* Lighter Blue on hover */
+}
+
+/* Minimal Scrollbar for specific components */
+.custom-scrollbar-minimal::-webkit-scrollbar {
+  width: 4px; /* Reduced width */
+}
+
+.custom-scrollbar-minimal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar-minimal::-webkit-scrollbar-thumb {
+  background: #2a3b55; /* Subtle dark blue */
+  border-radius: 4px;
+}
+
+.custom-scrollbar-minimal::-webkit-scrollbar-thumb:hover {
+  background: #3e5270;
 }
