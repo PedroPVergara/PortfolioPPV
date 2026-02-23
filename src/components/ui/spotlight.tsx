@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React from "react"
 import { cn } from "@/lib/utils"
 
 export interface SpotlightBackgroundProps {
@@ -10,30 +10,16 @@ export interface SpotlightBackgroundProps {
   size?: number
   /** Blur amount for softer edges */
   blur?: number
-  /** Smoothing factor for cursor tracking (0-1, lower = smoother) */
-  smoothing?: number
-  /** Enable ambient drift when no mouse activity */
-  ambient?: boolean
   /** Opacity of the spotlight */
   opacity?: number
-  /** Speed multiplier for ambient animation */
+  /** Animation duration in seconds (higher = slower) */
   speed?: number
-  /** Reference to an element to detect overlap with */
+  /** Ignored in CSS version but kept for compatibility */
+  smoothing?: number
+  /** Ignored in CSS version but kept for compatibility */
+  ambient?: boolean
+  /** Ignored in CSS version but kept for compatibility */
   imageRef?: React.RefObject<HTMLElement | null>
-}
-
-interface SpotlightPosition {
-  x: number
-  y: number
-  targetX: number
-  targetY: number
-  currentSize: number
-}
-
-interface RenderPosition {
-  x: number
-  y: number
-  size: number
 }
 
 export function SpotlightBackground({
@@ -42,135 +28,49 @@ export function SpotlightBackground({
   colors = ["rgba(120, 119, 198, 0.3)"],
   size = 400,
   blur = 80,
-  smoothing = 0.1,
-  ambient = true,
   opacity = 1,
-  speed = 1,
-  imageRef,
+  speed = 10, // Default duration in seconds
 }: SpotlightBackgroundProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const spotlightsRef = useRef<SpotlightPosition[]>([])
-  const animationRef = useRef<number | null>(null)
-  const [positions, setPositions] = useState<RenderPosition[]>([])
-
   const colorArray = Array.isArray(colors) ? colors : [colors]
 
-  // Initialize spotlight positions
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    const { width, height } = container.getBoundingClientRect()
-    const centerX = width / 2
-    const centerY = height / 2
-
-    spotlightsRef.current = colorArray.map((_, i) => ({
-      x: centerX + (i - (colorArray.length - 1) / 2) * 50,
-      y: centerY,
-      targetX: centerX + (i - (colorArray.length - 1) / 2) * 50,
-      targetY: centerY,
-      currentSize: size,
-    }))
-
-    setPositions(spotlightsRef.current.map(s => ({ x: s.x, y: s.y, size: s.currentSize })))
-  }, [colorArray.length, size])
-
-  // Lerp helper
-  const lerp = useCallback((start: number, end: number, factor: number) => {
-    return start + (end - start) * factor
-  }, [])
-
-  // Animation loop
-  useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    const { width, height } = container.getBoundingClientRect()
-    let tick = 0
-
-    const animate = () => {
-      tick += speed
-      const isAmbient = ambient
-
-      // Check overlap with image
-      let imageRect: DOMRect | null = null
-      if (imageRef?.current) {
-        imageRect = imageRef.current.getBoundingClientRect()
-      }
-
-      spotlightsRef.current = spotlightsRef.current.map((spotlight, i) => {
-        let { x, y, targetX, targetY, currentSize } = spotlight
-
-        // Ambient drift
-        if (isAmbient) {
-          const offset = i * 0.5
-          targetX = width / 2 + Math.sin(tick * 0.005 + offset) * (width * 0.3)
-          targetY = height / 2 + Math.cos(tick * 0.003 + offset) * (height * 0.25)
-        }
-
-        // Smooth interpolation
-        x = lerp(x, targetX, smoothing)
-        y = lerp(y, targetY, smoothing)
-
-        // Size logic based on overlap
-        let targetSize = size
-        if (imageRect) {
-          const imageCenterX = imageRect.left + imageRect.width / 2
-          const imageCenterY = imageRect.top + imageRect.height / 2
-          
-          // Calculate distance from spotlight center to image center
-          const dx = x - imageCenterX
-          const dy = y - imageCenterY
-          const distance = Math.sqrt(dx * dx + dy * dy)
-          
-          // Define radius where effect starts (larger than image itself)
-          const maxDim = Math.max(imageRect.width, imageRect.height)
-          const effectRadius = maxDim * 1.5 // Effect starts further out
-          
-          if (distance < effectRadius) {
-            // Calculate intensity (0 to 1)
-            // 1 at center, 0 at effectRadius edge
-            const intensity = Math.max(0, 1 - (distance / effectRadius))
-            
-            // SmoothStep interpolation for organic feel
-            const smoothIntensity = intensity * intensity * (3 - 2 * intensity)
-            
-            // Increase size up to 100% more (2x total) at peak overlap
-            targetSize = size + (size * 1.0 * smoothIntensity)
-          }
-        }
-        currentSize = lerp(currentSize, targetSize, 0.05) // Smooth size transition
-
-        return { x, y, targetX, targetY, currentSize }
-      })
-
-      setPositions(spotlightsRef.current.map(s => ({ x: s.x, y: s.y, size: s.currentSize })))
-      animationRef.current = requestAnimationFrame(animate)
-    }
-
-    animationRef.current = requestAnimationFrame(animate)
-
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current)
-    }
-  }, [ambient, smoothing, lerp, speed, size, imageRef])
-
   return (
-    <div
-      ref={containerRef}
-      className={cn("fixed inset-0 overflow-hidden", className)}
-    >
+    <div className={cn("fixed inset-0 overflow-hidden", className)}>
+      <style>{`
+        @keyframes spotlight-float-1 {
+          0% { transform: translate(-20%, -20%) scale(1); }
+          33% { transform: translate(30%, 10%) scale(1.1); }
+          66% { transform: translate(-10%, 30%) scale(0.9); }
+          100% { transform: translate(-20%, -20%) scale(1); }
+        }
+        @keyframes spotlight-float-2 {
+          0% { transform: translate(20%, 20%) scale(1); }
+          33% { transform: translate(-30%, -10%) scale(1.2); }
+          66% { transform: translate(10%, -30%) scale(0.8); }
+          100% { transform: translate(20%, 20%) scale(1); }
+        }
+        @keyframes spotlight-float-3 {
+          0% { transform: translate(-10%, 10%) scale(0.9); }
+          50% { transform: translate(20%, -20%) scale(1.1); }
+          100% { transform: translate(-10%, 10%) scale(0.9); }
+        }
+      `}</style>
+
       {/* Spotlight layers */}
       {colorArray.map((color, i) => (
         <div
           key={i}
-          className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+          className="pointer-events-none absolute rounded-full will-change-transform"
           style={{
+            width: size,
+            height: size,
+            left: '50%',
+            top: '50%',
+            marginLeft: -size / 2,
+            marginTop: -size / 2,
+            background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
             opacity,
-            background: positions[i]
-              ? `radial-gradient(${positions[i].size}px circle at ${positions[i].x}px ${positions[i].y}px, ${color}, transparent 70%)`
-              : "transparent",
             filter: `blur(${blur}px)`,
+            animation: `spotlight-float-${(i % 3) + 1} ${speed * (1 + i * 0.2)}s infinite ease-in-out`,
           }}
         />
       ))}
